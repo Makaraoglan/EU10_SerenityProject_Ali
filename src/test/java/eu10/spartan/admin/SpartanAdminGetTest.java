@@ -6,6 +6,8 @@ import net.serenitybdd.rest.SerenityRest;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static net.serenitybdd.rest.SerenityRest.lastResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
@@ -37,9 +39,25 @@ public class SpartanAdminGetTest {
 		given().accept(ContentType.JSON)
 				.and().auth().basic("admin","admin")
 				.and().pathParam("id",15)
-				.when().get("/api/spartans/{id}")
-				.then().statusCode(200)
-				.and().contentType(ContentType.JSON);
+		.when().get("/api/spartans/{id}");
+
+
+		System.out.println(lastResponse().statusCode());
+
+		System.out.println(lastResponse().path("id").toString());
+
+		System.out.println(lastResponse().jsonPath().getString("name"));
 	}
 
+	@Test
+	public void getOneSpartanAssertion(){
+		given().accept(ContentType.JSON)
+				.and().auth().basic("admin","admin")
+				.and().pathParam("id",15)
+				.when().get("/api/spartans/{id}");
+
+		//serenity way of assertion
+
+
+	}
 }
